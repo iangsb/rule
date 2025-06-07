@@ -21,30 +21,22 @@
     }
   },
 
-  "dns": {
-  "servers": [
-    {
-      "tag": "localDns",
-      "address": "223.5.5.5",
-      "address_strategy": "ipv4_only",
-      "detour": "🎯 Direct"
-    },
-    {
-      "tag": "proxyDns",
-      "address": "https://dns.google/dns-query",
-      "address_strategy": "ipv4_only",
-      "detour": "🚀 Choice"
-    }
-  ],
-  "rules": [
-    { "rule_set": "geosite-cn", "server": "localDns" },
-    { "rule_set": "geosite-geolocation-!cn", "server": "proxyDns" },
-    { "clash_mode": "direct", "server": "localDns" },
-    { "clash_mode": "global", "server": "proxyDns" }
-  ],
-  "strategy": "ipv4_only",
-  "final": "localDns"
-},
+   "dns": {
+    "servers": [
+      {"tag": "proxyDns", "address": "https://dns.google/dns-query", "address_resolver": "defaultDns", "address_strategy": "ipv4_only", "detour": "🚀 Choice"},
+      {"tag": "localDns", "address": "223.5.5.5", "address_resolver": "defaultDns", "address_strategy": "ipv4_only", "detour": "🎯 Direct"},
+      {"tag": "defaultDns", "address": "223.5.5.5", "address_strategy": "ipv4_only", "detour": "🎯 Direct"}
+    ],
+    "rules": [
+      { "outbound": "any", "server": "defaultDns", "disable_cache": true },
+      { "clash_mode": "direct", "server": "localDns" },
+      { "clash_mode": "global", "server": "proxyDns" },
+      { "rule_set": "geosite-cn", "server": "localDns" },
+      { "rule_set": "geosite-geolocation-!cn", "server": "proxyDns" }
+    ],
+    "final": "localDns",
+    "strategy": "ipv4_only"
+  },
 
 "inbounds": [
   {
