@@ -22,21 +22,29 @@
   },
 
   "dns": {
-    "servers": [
-      {"tag": "proxyDns", "address": "https://dns.google/dns-query", "address_resolver": "defaultDns", "address_strategy": "ipv4_only", "detour": "🚀 Choice"},
-      {"tag": "localDns", "address": "223.5.5.5", "address_resolver": "defaultDns", "address_strategy": "ipv4_only", "detour": "🎯 Direct"},
-      {"tag": "defaultDns", "address": "223.5.5.5", "address_strategy": "ipv4_only", "detour": "🎯 Direct"}
-    ],
-    "rules": [
-      { "outbound": "any", "server": "defaultDns", "disable_cache": true },
-      { "clash_mode": "direct", "server": "localDns" },
-      { "clash_mode": "global", "server": "proxyDns" },
-      { "rule_set": "geosite-cn", "server": "localDns" },
-      { "rule_set": "geosite-geolocation-!cn", "server": "proxyDns" }
-    ],
-    "final": "localDns",
-    "strategy": "ipv4_only"
-  },
+  "servers": [
+    {
+      "tag": "localDns",
+      "address": "223.5.5.5",
+      "address_strategy": "ipv4_only",
+      "detour": "🎯 Direct"
+    },
+    {
+      "tag": "proxyDns",
+      "address": "https://dns.google/dns-query",
+      "address_strategy": "ipv4_only",
+      "detour": "🚀 Choice"
+    }
+  ],
+  "rules": [
+    { "rule_set": "geosite-cn", "server": "localDns" },
+    { "rule_set": "geosite-geolocation-!cn", "server": "proxyDns" },
+    { "clash_mode": "direct", "server": "localDns" },
+    { "clash_mode": "global", "server": "proxyDns" }
+  ],
+  "strategy": "ipv4_only",
+  "final": "localDns"
+},
 
 "inbounds": [
   {
@@ -66,29 +74,25 @@
 ],
 
   "outbounds": [
-    { "tag": "🚀 Choice", "type": "selector", "outbounds": ["🔯 HK-Auto", "🇭🇰 HK", "🇯🇵 JP", "🇸🇬 SG", "🇺🇲 US", "🐸 ALL", "♻️ Auto", "🎯 Direct"] },
-    { "tag": "📹 YouTube", "type": "selector", "outbounds": ["🚀 Choice", "♻️ Auto", "🔯 HK-Auto", "🔯 JP-Auto", "🔯 US-Auto", "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
-    { "tag": "🤖 OpenAI", "type": "selector", "outbounds": ["🚀 Choice", "♻️ Auto", "🔯 HK-Auto", "🔯 JP-Auto", "🔯 US-Auto", "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
-    { "tag": "🍀 Google", "type": "selector", "outbounds": ["🚀 Choice", "♻️ Auto", "🔯 HK-Auto", "🔯 JP-Auto", "🔯 US-Auto", "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
-    { "tag": "👨‍💻 Github", "type": "selector", "outbounds": ["🚀 Choice", "♻️ Auto", "🔯 HK-Auto", "🔯 JP-Auto", "🔯 US-Auto", "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
-    { "tag": "🪟 Microsoft", "type": "selector", "outbounds": ["🚀 Choice", "♻️ Auto", "🔯 HK-Auto", "🔯 JP-Auto", "🔯 US-Auto", "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL", "🎯 Direct"] },
-    { "tag": "🐬 OneDrive", "type": "selector", "outbounds": ["🚀 Choice", "♻️ Auto", "🔯 HK-Auto", "🔯 JP-Auto", "🔯 US-Auto", "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
-    { "tag": "🎵 TikTok", "type": "selector", "outbounds": ["🚀 Choice", "♻️ Auto", "🔯 HK-Auto", "🔯 JP-Auto", "🔯 US-Auto", "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
-    { "tag": "💶 PayPal", "type": "selector", "outbounds": ["🚀 Choice", "♻️ Auto", "🔯 HK-Auto", "🔯 JP-Auto", "🔯 US-Auto", "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] }, 
-    { "tag": "📚 xiaohongshu", "type": "selector", "outbounds": ["🚀 Choice", "♻️ Auto", "🔯 HK-Auto", "🔯 JP-Auto", "🔯 US-Auto", "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL", "🎯 Direct"] },    
-    { "tag": "🎥 Netflix", "type": "selector", "outbounds": ["🚀 Choice", "♻️ Auto", "🔯 HK-Auto", "🔯 JP-Auto", "🔯 US-Auto", "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
-    { "tag": "📲 Telegram", "type": "selector", "outbounds": ["🚀 Choice", "♻️ Auto", "🔯 HK-Auto", "🔯 JP-Auto", "🔯 US-Auto", "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
-    { "tag": "🍏 Apple", "type": "selector", "outbounds": ["🎯 Direct", "🚀 Choice", "♻️ Auto", "🔯 HK-Auto", "🔯 JP-Auto", "🔯 US-Auto", "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
+    { "tag": "🚀 Choice", "type": "selector", "outbounds": ["🔯 HK-Auto", "🇭🇰 HK", "🇯🇵 JP", "🇸🇬 SG", "🇺🇲 US", "🐸 ALL", "🎯 Direct"] },
+    { "tag": "📹 YouTube", "type": "selector", "outbounds": ["🚀 Choice",  "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
+    { "tag": "🤖 OpenAI", "type": "selector", "outbounds": ["🚀 Choice",  "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
+    { "tag": "🍀 Google", "type": "selector", "outbounds": ["🚀 Choice",  "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
+    { "tag": "👨‍💻 Github", "type": "selector", "outbounds": ["🚀 Choice",  "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
+    { "tag": "🪟 Microsoft", "type": "selector", "outbounds": ["🚀 Choice",  "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL", "🎯 Direct"] },
+    { "tag": "🐬 OneDrive", "type": "selector", "outbounds": ["🚀 Choice",  "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
+    { "tag": "🎵 TikTok", "type": "selector", "outbounds": ["🚀 Choice",  "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
+    { "tag": "💶 PayPal", "type": "selector", "outbounds": ["🚀 Choice",  "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] }, 
+    { "tag": "📚 xiaohongshu", "type": "selector", "outbounds": ["🚀 Choice",  "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL", "🎯 Direct"] },    
+    { "tag": "🎥 Netflix", "type": "selector", "outbounds": ["🚀 Choice",  "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
+    { "tag": "📲 Telegram", "type": "selector", "outbounds": ["🚀 Choice",  "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
+    { "tag": "🍏 Apple", "type": "selector", "outbounds": ["🎯 Direct", "🚀 Choice",  "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
     { "tag": "🐠 other", "type": "selector", "outbounds": ["🚀 Choice","🎯 Direct"] },
     { "tag": "🐸 ALL", "type": "selector", "outbounds": ["{all}"]},
     { "tag": "🇭🇰 HK", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["🇭🇰|HK|hk|香港|港|HongKong"] }] },
     { "tag": "🇸🇬 SG", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["🇸🇬|SG|sg|新加坡|新|Singapore"] }] },
     { "tag": "🇯🇵 JP", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["🇯🇵|JP|jp|日本|日|Japan"] }] },
     { "tag": "🇺🇲 US", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["🇺🇸|US|us|美国|美|United States"] }, { "action": "exclude", "keywords": ["香港|港|HK|hk|HongKong"] }] },
-    { "tag": "🔯 HK-Auto", "type": "urltest", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["🇭🇰|HK|hk|香港|港|HongKong"] }], "url": "http://www.gstatic.com/generate_204", "interval": "10m", "tolerance": 50 },
-    { "tag": "🔯 JP-Auto", "type": "urltest", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["🇸🇬|SG|sg|新加坡|新|Singapore"] }], "url": "http://www.gstatic.com/generate_204", "interval": "10m", "tolerance": 50 },
-    { "tag": "🔯 US-Auto", "type": "urltest", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["🇺🇸|US|us|美国|美|United States"] }], "url": "http://www.gstatic.com/generate_204", "interval": "10m", "tolerance": 50 },
-    { "tag": "♻️ Auto", "type": "urltest", "outbounds": ["{all}"], "filter": [{ "action": "exclude", "keywords": ["网站|地址|剩余|过期|时间|有效"] }], "url": "http://www.gstatic.com/generate_204", "interval": "10m", "tolerance": 50 },
     { "tag": "GLOBAL", "type": "selector", "outbounds": ["{all}"]},
     { "tag": "🎯 Direct", "type": "direct" },
     { "tag": "dns-out", "type": "dns" }
