@@ -10,8 +10,8 @@
       "external_controller": "0.0.0.0:9095",
       "external_ui": "/etc/sing-box/ui",
       "secret": "",
-      "external_ui_download_url": "https://gh-proxy.com/https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip",
-      "external_ui_download_detour": "🎯 Direct",
+      "external_ui_download_url": "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip",
+      "external_ui_download_detour": "🚀 Choice",
       "default_mode": "rule"
     },
   "cache_file": {
@@ -21,65 +21,49 @@
     }
   },
 
-  "dns": {
-    "servers": [
-      {"tag": "proxyDns", "address": "https://dns.google/dns-query", "address_resolver": "defaultDns", "address_strategy": "ipv4_only", "detour": "🚀 Choice"},
-      {"tag": "localDns", "address": "223.5.5.5", "address_resolver": "defaultDns", "address_strategy": "ipv4_only", "detour": "🎯 Direct"},
-      {"tag": "defaultDns", "address": "223.5.5.5", "address_strategy": "ipv4_only", "detour": "🎯 Direct"}
-    ],
-    "rules": [
-      { "outbound": "any", "server": "defaultDns", "disable_cache": true },
-      { "clash_mode": "direct", "server": "localDns" },
-      { "clash_mode": "global", "server": "proxyDns" },
-      { "rule_set": "geosite-cn", "server": "localDns" },
-      { "rule_set": "geosite-geolocation-!cn", "server": "proxyDns" }
-    ],
-    "final": "localDns",
-    "strategy": "ipv4_only"
-  },
+ "dns": 
+ {
+   "servers": 
+   [
+     {"tag": "dns_direct", "address": "223.5.5.5", "address_strategy": "ipv4_only", "strategy": "ipv4_only", "detour": "🎯 Direct"},
+     {"tag": "dns_proxy", "address": "tls://8.8.8.8", "address_strategy": "ipv4_only", "strategy": "ipv4_only", "detour": "🚀 Choice"}
+   ],
+   "rules": 
+   [
+     {"outbound": "any", "server": "dns_direct", "disable_cache": true},
+     {"clash_mode": "Direct", "server": "dns_direct"},
+     {"clash_mode": "Global", "server": "dns_proxy"},
+     {"rule_set": "geosite-cn", "action": "route","server": "dns_direct"},
+     {"rule_set": "geosite-geolocation-!cn", "server": "dns_proxy"}
+   ],
+   "final": "dns_proxy",
+   "strategy": "ipv4_only"
+},
 
 "inbounds": [
   {
-    "type": "tun",
-    "address": "172.19.0.1/30",
-    "mtu": 9000,
-    "auto_route": true,
-    "auto_redirect": true,
-    "strict_route": true,
-    "stack": "system",
-    "sniff": true,
-    "platform": {
-      "http_proxy": {
-        "enabled": true,
-        "server": "127.0.0.1",
-        "server_port": 2080
-      }
-    }
-  },
-  {
-    "type": "mixed",
-    "listen": "127.0.0.1",
-    "listen_port": 2080,
-    "sniff": true,
-    "users": []
+    "type": "tproxy",
+    "tag": "tproxy-in",
+    "listen": "0.0.0.0",
+    "listen_port": 7895
   }
 ],
 
   "outbounds": [
-    { "tag": "🚀 Choice", "type": "selector", "outbounds": ["🇭🇰 HK", "🇯🇵 JP", "🇸🇬 SG", "🇺🇲 US", "🐸 ALL", "🎯 Direct"] },
-    { "tag": "📹 YouTube", "type": "selector", "outbounds": ["🚀 Choice", "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
-    { "tag": "🤖 OpenAI", "type": "selector", "outbounds": ["🚀 Choice", "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
-    { "tag": "🍀 Google", "type": "selector", "outbounds": ["🚀 Choice", "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
-    { "tag": "👨‍💻 Github", "type": "selector", "outbounds": ["🚀 Choice", "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
-    { "tag": "🪟 Microsoft", "type": "selector", "outbounds": ["🚀 Choice", "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL", "🎯 Direct"] },
-    { "tag": "🐬 OneDrive", "type": "selector", "outbounds": ["🚀 Choice", "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
-    { "tag": "🎵 TikTok", "type": "selector", "outbounds": ["🚀 Choice", "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
-    { "tag": "💶 PayPal", "type": "selector", "outbounds": ["🚀 Choice", "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] }, 
-    { "tag": "📚 xiaohongshu", "type": "selector", "outbounds": ["🚀 Choice", "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL", "🎯 Direct"] },    
-    { "tag": "🎥 Netflix", "type": "selector", "outbounds": ["🚀 Choice", "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
-    { "tag": "📲 Telegram", "type": "selector", "outbounds": ["🚀 Choice", "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
+    { "tag": "🚀 Choice", "type": "selector", "outbounds": ["🔯 HK-Auto", "🇭🇰 HK", "🇯🇵 JP", "🇸🇬 SG", "🇺🇲 US", "🐸 ALL", "🎯 Direct"] },
+    { "tag": "📹 YouTube", "type": "selector", "outbounds": ["🚀 Choice",  "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
+    { "tag": "🤖 OpenAI", "type": "selector", "outbounds": ["🚀 Choice",  "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
+    { "tag": "🍀 Google", "type": "selector", "outbounds": ["🚀 Choice",  "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
+    { "tag": "👨‍💻 Github", "type": "selector", "outbounds": ["🚀 Choice",  "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
+    { "tag": "🪟 Microsoft", "type": "selector", "outbounds": ["🚀 Choice",  "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL", "🎯 Direct"] },
+    { "tag": "🐬 OneDrive", "type": "selector", "outbounds": ["🚀 Choice",  "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
+    { "tag": "🎵 TikTok", "type": "selector", "outbounds": ["🚀 Choice",  "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
+    { "tag": "💶 PayPal", "type": "selector", "outbounds": ["🚀 Choice",  "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] }, 
+    { "tag": "📚 xiaohongshu", "type": "selector", "outbounds": ["🚀 Choice",  "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL", "🎯 Direct"] },    
+    { "tag": "🎥 Netflix", "type": "selector", "outbounds": ["🚀 Choice",  "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
+    { "tag": "📲 Telegram", "type": "selector", "outbounds": ["🚀 Choice",  "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
     { "tag": "🍏 Apple", "type": "selector", "outbounds": ["🎯 Direct", "🚀 Choice",  "🇭🇰 HK", "🇸🇬 SG", "🇯🇵 JP", "🇺🇲 US", "🐸 ALL"] },
-    { "tag": "🐠 other", "type": "selector", "outbounds": ["🚀 Choice", "🎯 Direct"] },
+    { "tag": "🐠 other", "type": "selector", "outbounds": ["🚀 Choice","🎯 Direct"] },
     { "tag": "🐸 ALL", "type": "selector", "outbounds": ["{all}"]},
     { "tag": "🇭🇰 HK", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["🇭🇰|HK|hk|香港|港|HongKong"] }] },
     { "tag": "🇸🇬 SG", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["🇸🇬|SG|sg|新加坡|新|Singapore"] }] },
