@@ -43,7 +43,7 @@
     {"tag": "SG", "type": "selector", "outbounds": ["{all}"], "filter": [{"action": "include", "keywords": ["SG|sg|新加坡|坡|狮城|Singapore"]}, {"action": "exclude", "keywords": ["免费"]}]},
     {"tag": "US", "type": "selector", "outbounds": ["{all}"], "filter": [{"action": "include", "keywords": ["US|us|美国|美|United States"]}, {"action": "exclude", "keywords": ["AUS|RUS|免费"]}]},
     {"tag": "TW", "type": "selector", "outbounds": ["{all}"], "filter": [{"action": "include", "keywords": ["TW|tw|台湾|Taiwan"]}, {"action": "exclude", "keywords": ["免费"]}]},
-    {"tag": "GLOBAL", "type": "selector", "outbounds": ["Proxy", "AI", "YouTube", "Google", "Github", "Telegram", "TikTok", "Netflix", "PayPal", "Steam", "Microsoft", "OneDrive", "Apple", "Others", "HK", "JP", "SG", "US", "DirectLine"]},
+    {"tag": "GLOBAL", "type": "selector", "outbounds": ["Proxy", "YouTube", "Google", "Github", "Telegram", "TikTok", "Netflix", "PayPal", "Steam", "Microsoft", "OneDrive", "Apple", "Others", "HK", "JP", "SG", "US", "DirectLine"]},
     {"tag": "DirectLine", "type": "direct"}
   ],
   "route": {
