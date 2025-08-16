@@ -53,6 +53,7 @@
       {"ip_is_private": true, "outbound": "DirectLine"},
       {"clash_mode": "direct", "outbound": "DirectLine"},
       {"clash_mode": "global", "outbound": "GLOBAL"},
+      {"domain": ["futunn.com", "api.updf.com", "updf.com", "longbridge.com", "futu5.com", "gov.hk", "longbridge.com", "longportapp.com"], "outbound": "Proxy"},
       {"rule_set": "geosite-youtube", "outbound": "YouTube"},
       {"rule_set": "geosite-google", "outbound": "Google"},
       {"rule_set": "geosite-github", "outbound": "Github"},
