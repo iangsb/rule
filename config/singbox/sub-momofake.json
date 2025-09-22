@@ -45,8 +45,7 @@
     {"tag": "SG", "type": "selector", "outbounds": []},
     {"tag": "US", "type": "selector", "outbounds": []},
     {"tag": "TW", "type": "selector", "outbounds": []},
-    {"tag": "NonAuto", "type": "selector", "outbounds": []},
-    {"tag": "GLOBAL", "type": "selector", "outbounds": ["Proxy", "AI", "YouTube", "Google", "Github", "Telegram", "TikTok", "Netflix", "PayPal", "Steam", "Microsoft", "OneDrive", "Apple", "Others", "HK", "JP", "SG", "US", "NonAuto", "TW", "Line"]},
+    {"tag": "GLOBAL", "type": "selector", "outbounds": ["Proxy", "Line"]},
     {"tag": "Line", "type": "direct"}
   ],
   "route": {
